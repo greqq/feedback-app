@@ -6,7 +6,7 @@ import { useState, useContext, useEffect } from 'react';
 
 function FeedbackForm() {
   const [text, setText] = useState('');
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState('');
 
@@ -20,6 +20,7 @@ function FeedbackForm() {
       setRating(feedbackEdit.item.rating);
     }
   }, [feedbackEdit]);
+
   const handleTextChange = (e) => {
     if (text === '') {
       setBtnDisabled(true);
@@ -46,6 +47,8 @@ function FeedbackForm() {
         addFeedback(newFeedback);
       }
 
+      setBtnDisabled(true);
+      setRating(10);
       setText('');
     }
   };
@@ -54,7 +57,7 @@ function FeedbackForm() {
     <Card>
       <form onSubmit={handleSubmit}>
         <h2>How would you rate your service with us?</h2>
-        <RatingSelect select={(rating) => setRating(rating)} />
+        <RatingSelect select={setRating} selected={rating} />
         <div className='input-group'>
           <input
             onChange={handleTextChange}
